@@ -12,4 +12,5 @@ func main() {
 	fmt.Println("GOOOOO")
 	branch3.Branch3()
 	loop.ForLoop()
+	fmt.Println("Last commit")
 }
