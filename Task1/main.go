@@ -7,12 +7,12 @@ func main() {
 	uniqElements := make(map[int]bool)
 	res := make([]int, 0)
 
-	for _, val := range arr {
-		uniqElements[val] = true
-	}
-
-	for num, _ := range uniqElements {
-		res = append(res, num)
+	for _, v := range arr {
+		ok := uniqElements[v]
+		if !ok {
+			res = append(res, v)
+			uniqElements[v] = true
+		}
 	}
 
 	fmt.Println(res)
