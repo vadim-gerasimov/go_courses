@@ -7,15 +7,15 @@ import (
 )
 
 type dog struct {
-	feedPerKg int
-	weight    int
+	weight int
 }
 
 func (d dog) feedPerMonth() int {
-	return d.feedPerKg * d.weight
+	const feedPerKg int = 2
+	return feedPerKg * d.weight
 }
 
-func (d dog) animalWeight() int {
+func (d dog) Weight() int {
 	return d.weight
 }
 
@@ -24,15 +24,15 @@ func (d dog) String() string {
 }
 
 type cat struct {
-	feedPerKg int
-	weight    int
+	weight int
 }
 
 func (c cat) feedPerMonth() int {
-	return c.feedPerKg * c.weight
+	const feedPerKg int = 7
+	return feedPerKg * c.weight
 }
 
-func (c cat) animalWeight() int {
+func (c cat) Weight() int {
 	return c.weight
 }
 
@@ -41,15 +41,15 @@ func (c cat) String() string {
 }
 
 type cow struct {
-	feedPerKg int
-	weight    int
+	weight int
 }
 
 func (c cow) feedPerMonth() int {
-	return c.feedPerKg * c.weight
+	const feedPerKg int = 25
+	return feedPerKg * c.weight
 }
 
-func (c cow) animalWeight() int {
+func (c cow) Weight() int {
 	return c.weight
 }
 
@@ -59,7 +59,7 @@ func (c cow) String() string {
 
 type animals interface {
 	feedPerMonthGetter
-	animalWeightGetter
+	WeightGetter
 	fmt.Stringer
 }
 
@@ -67,14 +67,13 @@ type feedPerMonthGetter interface {
 	feedPerMonth() int
 }
 
-type animalWeightGetter interface {
-	animalWeight() int
+type WeightGetter interface {
+	Weight() int
 }
 
-func animalInfo(a []animals) int {
-	totalFeedForFarm := 0
+func animalInfo(a []animals) (totalFeedForFarm int) {
 	for _, v := range a {
-		fmt.Printf("This is a %s, it weights %v, and it needs %v of feed per month.\n", v.String(), v.animalWeight(), v.feedPerMonth())
+		fmt.Printf("This is a %s, it weights %v kg, and it needs %v kg of feed per month.\n", v.String(), v.Weight(), v.feedPerMonth())
 		totalFeedForFarm += v.feedPerMonth()
 	}
 	return totalFeedForFarm
@@ -83,25 +82,25 @@ func animalInfo(a []animals) int {
 func generateAnimals(n int) []animals {
 	var farmAnimals []animals
 
-	minCatWeight := 1
-	maxCatWeight := 20
+	const minCatWeight int = 1
+	const maxCatWeight int = 20
 
-	minDogWeight := 1
-	maxDogWeight := 90
+	const minDogWeight int = 1
+	const maxDogWeight int = 90
 
-	minCowWeight := 50
-	maxCowWeight := 600
+	const minCowWeight int = 50
+	const maxCowWeight int = 600
 
 	for i := 0; i < n; i++ {
 		rand.Seed(time.Now().UnixNano())
 		newRandomAnimal := rand.Intn(3)
 		switch newRandomAnimal {
 		case 0:
-			farmAnimals = append(farmAnimals, dog{weight: int(rand.Intn(maxDogWeight) + minDogWeight), feedPerKg: 2})
+			farmAnimals = append(farmAnimals, dog{weight: int(rand.Intn(maxDogWeight) + minDogWeight)})
 		case 1:
-			farmAnimals = append(farmAnimals, cat{weight: int(rand.Intn(maxCatWeight) + minCatWeight), feedPerKg: 7})
+			farmAnimals = append(farmAnimals, cat{weight: int(rand.Intn(maxCatWeight) + minCatWeight)})
 		case 2:
-			farmAnimals = append(farmAnimals, cow{weight: int(rand.Intn(maxCowWeight) + minCowWeight), feedPerKg: 25})
+			farmAnimals = append(farmAnimals, cow{weight: int(rand.Intn(maxCowWeight) + minCowWeight)})
 		}
 	}
 	return farmAnimals
@@ -114,5 +113,5 @@ func main() {
 	farmAnimals := generateAnimals(randIntOfAnimals)
 
 	total := animalInfo(farmAnimals)
-	fmt.Printf("Total feed per mounth %v\n", total)
+	fmt.Printf("Total feed per mounth %v kg.\n", total)
 }
