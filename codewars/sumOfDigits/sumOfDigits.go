@@ -3,7 +3,18 @@ package main
 import "fmt"
 
 func DigitalRoot(n int) int {
-	return (n-1)%9 + 1
+	sum := 0
+	for {
+		sum += n % 10
+		n /= 10
+		if n == 0 {
+			break
+		}
+	}
+	if sum > 9 {
+		sum = DigitalRoot(sum)
+	}
+	return sum
 }
 
 func main() {
