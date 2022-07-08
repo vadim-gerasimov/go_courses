@@ -96,11 +96,11 @@ func generateAnimals(n int) []animals {
 		newRandomAnimal := rand.Intn(3)
 		switch newRandomAnimal {
 		case 0:
-			farmAnimals = append(farmAnimals, dog{weight: int(rand.Intn(maxDogWeight) + minDogWeight)})
+			farmAnimals = append(farmAnimals, dog{weight: rand.Intn(maxDogWeight) + minDogWeight})
 		case 1:
-			farmAnimals = append(farmAnimals, cat{weight: int(rand.Intn(maxCatWeight) + minCatWeight)})
+			farmAnimals = append(farmAnimals, cat{weight: rand.Intn(maxCatWeight) + minCatWeight})
 		case 2:
-			farmAnimals = append(farmAnimals, cow{weight: int(rand.Intn(maxCowWeight) + minCowWeight)})
+			farmAnimals = append(farmAnimals, cow{weight: rand.Intn(maxCowWeight) + minCowWeight})
 		}
 	}
 	return farmAnimals
