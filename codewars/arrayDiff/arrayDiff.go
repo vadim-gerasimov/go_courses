@@ -7,7 +7,7 @@ func ArrayDiff(a, b []int) []int {
 	for _, item := range b {
 		m[item] = true
 	}
-	diff := []int{}
+	var diff []int
 	for _, item := range a {
 		if _, ok := m[item]; !ok {
 			diff = append(diff, item)
