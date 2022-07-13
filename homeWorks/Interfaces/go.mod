@@ -1,3 +1,3 @@
-module CoursesIntelias/go_courses/homeworks/Interfaces
+module Interfaces
 
 go 1.18
