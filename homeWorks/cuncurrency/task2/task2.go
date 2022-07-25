@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 	n := [][]int{
@@ -10,19 +12,21 @@ func main() {
 	}
 
 	var sum int
-	ch := make(chan int)
-	go func(ch chan int, n [][]int) {
-		for _, val := range n {
+	ch := make(chan int, len(n))
+
+	for _, val := range n {
+		go func(val []int, ch chan int) {
 			var res int
 			for _, v := range val {
 				res += v
 			}
 			ch <- res
-		}
-		close(ch)
-	}(ch, n)
-	for res := range ch {
-		sum += res
+		}(val, ch)
 	}
-	fmt.Printf("result: %d", sum)
+
+	for i := 0; i < len(n); i++ {
+		sum += <-ch
+	}
+	close(ch)
+	fmt.Printf("result: %d\n", sum)
 }
